@@ -7,7 +7,7 @@ app = Flask(__name__)
 def hello_world():
     return render_template('index.html')
 
-@app.route('/api/postSurveyData', methods=['POST'])
+@app.route('/minying1012/helloworld/api/postSurveyData', methods=['POST'])
 def postSurveyData():
     data = request.get_json()
     return jsonify(data)
