@@ -7,9 +7,10 @@ app = Flask(__name__)
 def hello_world():
     return render_template('index.html')
 
-@app.route('/api', methods=['GET'])
+@app.route('/api', methods=['POST'])
 def postSurveyData():
     data = request.get_json()
+    #return render_template('test11.html')
     return jsonify(data)
 
 if __name__ == '__main__':
