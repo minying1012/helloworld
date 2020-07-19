@@ -2,6 +2,21 @@ from flask import Flask, render_template, jsonify, request
 from flask_restful import Resource, reqparse, Api
 import os
 
+class getSurveyData(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('id', required=False)
+    parser.add_argument('zip', required=False)
+    parser.add_argument('yc', required=False)
+    parser.add_argument('nc', required=False)
+
+    def get(self):
+        try:
+            args = postSurveyData.parser.parse_args()
+            print(args)
+            return {'result': "Success"}, 200
+        except Exception as e:
+            return {'error': str(e)}
+
 class postSurveyData(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument('id', type=str, required=True)
@@ -20,7 +35,6 @@ class postSurveyData(Resource):
                     return {'error': 'surveyResult only allowed integer type'}, 400
                 elif item != 0 & item != 1:
                     return {'error': 'surveyResult allowed only 1 and 0 value'}, 400
-
             percent = surveyYesSum/len(surveryList)*100
             
             return {'precent': str(int(percent))}, 200
@@ -30,6 +44,7 @@ class postSurveyData(Resource):
 app = Flask(__name__)
 api = Api(app)
 api.add_resource(postSurveyData, '/api/postSurveyData')
+api.add_resource(getSurveyData, '/api/getSurveyData')
 
 @app.route('/')
 def hello_world():
