@@ -3,16 +3,15 @@ from flask_restful import Resource, reqparse, Api
 import os
 
 class getSurveyData(Resource):
-    parser = reqparse.RequestParser()
-    parser.add_argument('id', required=False)
-    parser.add_argument('zip', required=False)
-    parser.add_argument('yc', required=False)
-    parser.add_argument('nc', required=False)
-
     def get(self):
         try:
-            args = postSurveyData.parser.parse_args()
-            print(args)
+            parser = reqparse.RequestParser()
+            parser.add_argument('id', required=True, type=str)
+            parser.add_argument('zipcode', required=True, type=int)
+            parser.add_argument('yc', required=True, type=int)
+            parser.add_argument('nc', required=True, type=int)
+            args = parser.parse_args()
+
             return {'result': "Success"}, 200
         except Exception as e:
             return {'error': str(e)}
